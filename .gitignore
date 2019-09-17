@@ -1,0 +1,11 @@
+# python stuff
+__pycache__/
+*.pyc
+*.egg-info/
+
+# distribution
+build/
+dist/
+
+# ide stuff
+.idea/
