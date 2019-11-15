@@ -3,9 +3,7 @@ from __future__ import print_function
 from os import mkdir
 from multiprocessing import cpu_count
 
-from torch import cuda, device, no_grad, save
-from torch.nn import NLLLoss
-from torch.optim import SGD
+import torch as t
 
 from data import mnist_loader
 from nn.SimpleFC import SimpleFC
@@ -15,8 +13,8 @@ MAX_NB_CPU = 8
 NB_CPU = cpu_count() if cpu_count() < MAX_NB_CPU else MAX_NB_CPU
 
 # use cuda if available
-use_cuda = cuda.is_available()
-device = device("cuda" if use_cuda else "cpu")
+use_cuda = t.cuda.is_available()
+device = t.device("cuda" if use_cuda else "cpu")
 kwargs = {'num_workers': NB_CPU, 'pin_memory': True} if use_cuda else {}
 
 
@@ -39,7 +37,7 @@ def test(test_loader, model, criterion):
     model.eval()
     test_loss = 0
     correct = 0
-    with no_grad():
+    with t.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
@@ -66,9 +64,9 @@ def main():
     model = SimpleFC(input_shape=[1, 28, 28]).to(device)
 
     # create a stochastic gradient descent optimizer
-    optimizer = SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+    optimizer = t.optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
     # create a loss function
-    criterion = NLLLoss()
+    criterion = t.nn.NLLLoss()
 
     # get training and test data sets
     train_loader = mnist_loader.get_train_loader(batch_size=batch_size, kwargs=kwargs)
@@ -85,7 +83,7 @@ def main():
         except FileExistsError:
             pass
 
-        save(model, "trained_models/mnist_simple_fc.pt")
+        t.save(model, "trained_models/mnist_simple_fc.pt")
 
 
 if __name__ == '__main__':
