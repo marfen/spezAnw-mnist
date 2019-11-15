@@ -85,7 +85,7 @@ def main():
         except FileExistsError:
             pass
 
-        save(model.state_dict(), "trained_models/mnist_simple_fc.pt")
+        save(model, "trained_models/mnist_simple_fc.pt")
 
 
 if __name__ == '__main__':
