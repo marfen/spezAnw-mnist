@@ -6,7 +6,7 @@ from multiprocessing import cpu_count
 import torch as t
 
 from data import mnist_loader
-from nn.SimpleFC import SimpleFC
+from models.SimpleFC import SimpleFC
 
 # select number of cpu workers, maximum of 8
 MAX_NB_CPU = 8
@@ -57,14 +57,13 @@ def main():
     epochs = 10
     learning_rate = 0.01
     log_interval = 10
-    momentum = 0.9
     save_model = True
 
-    # create neural network model
+    # create neural network models
     model = SimpleFC(input_shape=[1, 28, 28]).to(device)
 
     # create a stochastic gradient descent optimizer
-    optimizer = t.optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+    optimizer = t.optim.SGD(model.parameters(), lr=learning_rate)
     # create a loss function
     criterion = t.nn.NLLLoss()
 
