@@ -25,4 +25,5 @@ class SimpleFC(Module):
         x = self.layer_1(x)  # variant 1
         x = F.relu(self.layer_2(x))  # variant 2
         x = self.layer_3(x)
+        
         return F.log_softmax(x, dim=1)
