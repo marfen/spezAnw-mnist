@@ -81,8 +81,7 @@ def main():
             mkdir("trained_models")
         except FileExistsError:
             pass
-
-        t.save(model, "trained_models/mnist_simple_fc.pt")
+        t.save({'state_dict': model.state_dict()}, 'trained_models/mnist_simple_fc.pth')
 
 
 if __name__ == '__main__':
