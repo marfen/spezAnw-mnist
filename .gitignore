@@ -10,8 +10,4 @@ dist/
 # ide stuff
 .idea/
 
-# downloaded data
-/data/MNIST/
-
-# trained models
-/trained_models/
+venv
